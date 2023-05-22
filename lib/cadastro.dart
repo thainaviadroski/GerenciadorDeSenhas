@@ -1,6 +1,7 @@
 // main.dart
 import 'package:flutter/material.dart';
-import 'package:password_manager/Data/perfil_datasource.dart';
+// ignore: depend_on_referenced_packages
+import 'Data/perfil_datasource.dart';
 import 'Data/Entity/ProfileEntity.dart';
 import 'Data/perfil_datasource.dart';
 
@@ -36,9 +37,9 @@ class _HomePageState extends State<HomePage> {
 //      });
 //    }
 //  }
-  String _nome = '';
-  String _email = '';
-  String _senha = '';
+  String nome = '';
+  String email = '';
+  String senha = '';
 
   @override
   Widget build(BuildContext context) {
@@ -72,11 +73,11 @@ class _HomePageState extends State<HomePage> {
             //       : const Text('Por favor selecione a imagem'),
             //),
             const SizedBox(height: 35),
-            nome(),
+            tff_nome(),
             const SizedBox(height: 35),
-            email(),
+            tff_email(),
             const SizedBox(height: 35),
-            senha(),
+            tff_senha(),
             const SizedBox(height: 35),
             //salvar(_nome, _email, _senha),
           ]),
@@ -87,14 +88,14 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: Colors.black,
         onPressed: () {
           //PerfilDatasource.insertPerfil(_nome, _email, _senha);
-          PerfilDatasource.insertPerfil(_nome, _email, _senha);
+          PerfilDatasource.insertPerfil(nome, email, senha);
         },
         child: Icon(Icons.add),
       ),
     );
   }
 
-  TextFormField email() {
+  TextFormField tff_email() {
     return TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -102,14 +103,14 @@ class _HomePageState extends State<HomePage> {
           }
         },
         onChanged: (value) => setState(() {
-              _email = value;
+              email = value;
             }),
         keyboardType: TextInputType.emailAddress,
         decoration: const InputDecoration(
             border: OutlineInputBorder(), labelText: 'E-mail'));
   }
 
-  TextFormField nome() {
+  TextFormField tff_nome() {
     return TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -117,14 +118,14 @@ class _HomePageState extends State<HomePage> {
           }
         },
         onChanged: (value) => setState(() {
-              _nome = value;
+              nome = value;
             }),
         keyboardType: TextInputType.emailAddress,
         decoration: const InputDecoration(
             border: OutlineInputBorder(), labelText: 'Nome'));
   }
 
-  TextFormField senha() {
+  TextFormField tff_senha() {
     return TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -135,7 +136,7 @@ class _HomePageState extends State<HomePage> {
           }
         },
         onChanged: (value) => setState(() {
-              _senha = value;
+              senha = value;
             }),
         keyboardType: TextInputType.emailAddress,
         decoration: const InputDecoration(

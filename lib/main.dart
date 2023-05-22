@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:password_manager/recuperar_senha.dart';
+import 'recuperar_senha.dart';
 
 import 'Data/perfil_datasource.dart';
 import 'cadastro.dart';
