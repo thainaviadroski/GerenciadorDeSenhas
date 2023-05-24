@@ -56,10 +56,11 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
           padding: const EdgeInsets.all(35),
           child: Column(children: [
+            // ignore: prefer_const_constructors
             Center(
-              child: ElevatedButton(
+              child: const ElevatedButton(
                 onPressed: null, //print('_openImagePicker'),
-                child: const Text('Selecione a imagem'),
+                child: Text('Selecione a imagem'),
               ),
             ),
             const SizedBox(height: 35),

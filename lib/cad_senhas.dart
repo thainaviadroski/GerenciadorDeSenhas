@@ -2,11 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'Data/senha_entity.dart';
-import 'Data/senha_sqlite_datasource.dart';
+import 'Data/senha_datasource.dart';
 
 class cadsenhas extends StatefulWidget {
-  const cadsenhas({Key? key}) : super(key: key);
-
   @override
   _cadsenhasState createState() {
     return _cadsenhasState();
@@ -18,6 +16,7 @@ class _cadsenhasState extends State<cadsenhas> {
   TextEditingController _loginController = TextEditingController();
   TextEditingController _senhaController = TextEditingController();
   bool _ocultaSenha = false;
+
   @override
   void initState() {
     super.initState();
@@ -49,8 +48,8 @@ class _cadsenhasState extends State<cadsenhas> {
           backgroundColor: Colors.green,
           foregroundColor: Colors.black,
           onPressed: () {
-            //senhaSQLiteDatasource().inserirSenha(_descricaoController.text,
-            //  _loginController.text, _senhaController.text);
+            SenhaDataSource().insertSenha(_descricaoController.text,
+                _loginController.text, _senhaController.text);
           },
           child: Icon(Icons.add),
         ),

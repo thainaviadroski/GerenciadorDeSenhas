@@ -5,18 +5,18 @@ import 'Entity/CartaoEntity.dart';
 import 'data_source.dart';
 import 'db_conection.dart';
 
-class cartaoSQLiteDatasource {
+class CartaoDatasource {
   Future create(CartaoEntity cartao) async {
     try {
       final Database db = await DB_Conection.getConexaoDB();
       cartao.cartaoID = await db.rawInsert('''insert into $CARTAO_TABLE_NAME(
-              $CARTAO_COLUMN_DESCRICAO,
-              $CARTAO_COLUMN_NUMERO,
-              $CARTAO_COLUMN_VALIDADE,
-              $CARTAO_COLUMN_CVV)
-              values(
-                '${cartao.descricao}','${cartao.numero}','${cartao.validade}','${cartao.cvv}','${cartao.senha}') 
-              ''');
+							$CARTAO_COLUMN_DESCRICAO,
+							$CARTAO_COLUMN_NUMERO,
+							$CARTAO_COLUMN_VALIDADE,
+							$CARTAO_COLUMN_CVV)
+							values(
+								'${cartao.descricao}','${cartao.numero}','${cartao.validade}','${cartao.cvv}','${cartao.senha}') 
+							''');
       queryAllRows();
     } catch (ex) {
       return;
@@ -98,13 +98,13 @@ class cartaoSQLiteDatasource {
   Future insertCartao(descricao, numero, validade, cvv, senha) async {
     final db = await DB_Conection.getConexaoDB();
     await db.rawInsert('''insert into $CARTAO_TABLE_NAME(
-              $CARTAO_COLUMN_DESCRICAO,
-              $CARTAO_COLUMN_NUMERO,
-              $CARTAO_COLUMN_VALIDADE,
-              $CARTAO_COLUMN_CVV,
-              $CARTAO_COLUMN_SENHA)
-              values(                
-                '${descricao}','${numero}','${validade}','${cvv}','${senha}') 
-              ''');
+							$CARTAO_COLUMN_DESCRICAO,
+							$CARTAO_COLUMN_NUMERO,
+							$CARTAO_COLUMN_VALIDADE,
+							$CARTAO_COLUMN_CVV,
+							$CARTAO_COLUMN_SENHA)
+							values(                
+								'${descricao}','${numero}','${validade}','${cvv}','${senha}') 
+							''');
   }
 }

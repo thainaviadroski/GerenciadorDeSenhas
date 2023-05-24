@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:password_manager/Data/data_source.dart';
+import 'data_source.dart';
 
 class DB_Conection {
   static Database? _database;

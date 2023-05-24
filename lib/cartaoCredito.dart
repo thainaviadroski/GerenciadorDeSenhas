@@ -1,188 +1,227 @@
-// ignore: file_names
-import 'dart:ui';
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
-// ignore: camel_case_types
-class cartaoCredito extends StatelessWidget {
-  const cartaoCredito({super.key});
+import 'Data/cartao_datasource.dart';
 
+class cadcartao extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple[300],
-        title: const Text('Cadastro de cartões'),
-      ),
-      body: Body(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepPurple[300],
-        onPressed: () {},
-        child: const Icon(Icons.add),
-      ),
-    );
+  _cadcartaoState createState() {
+    return _cadcartaoState();
   }
 }
 
-Widget fieldDescricao() {
-  return Container(
-    alignment: Alignment.center,
-    padding: const EdgeInsets.all(10),
-    child: TextFormField(
-      // ignore: prefer_const_constructors
-      decoration: InputDecoration(
-          border: const OutlineInputBorder(), labelText: 'Descrição'),
-    ),
-  );
-}
+class _cadcartaoState extends State<cadcartao> {
+  TextEditingController _descricaoController = TextEditingController();
+  TextEditingController _numeroCartaoController = TextEditingController();
+  TextEditingController _validadeController = TextEditingController();
+  TextEditingController _cvvController = TextEditingController();
+  TextEditingController _senhaController = TextEditingController();
+  bool _ocultaSenha = false;
 
-Widget fieldSenha() {
-  return Container(
-    alignment: Alignment.center,
-    padding: const EdgeInsets.all(10),
-    child: TextFormField(
-        obscureText: true,
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Cadastro cartões'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: Colors.black38,
+            onPressed: () => Navigator.pop(context, false),
+          ),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            fieldDescricao(),
+            SizedBox(
+              height: 20,
+            ),
+            CartaoFrente(context),
+            SizedBox(
+              height: 20,
+            ),
+            CartaoAtras(context),
+            SizedBox(
+              height: 05,
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.black,
+          onPressed: () {
+            CartaoDatasource().insertCartao(
+                _descricaoController.text,
+                _numeroCartaoController.text,
+                _validadeController.text,
+                _cvvController.text,
+                _senhaController.text);
+          },
+          child: Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+
+  Widget fieldNumero() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: TextField(
+        controller: _numeroCartaoController,
+        keyboardType: TextInputType.number,
         decoration: const InputDecoration(
-            border: OutlineInputBorder(), labelText: 'Senha')),
-  );
-}
+          border: OutlineInputBorder(),
+          labelText: 'Número',
+        ),
+      ),
+    );
+  }
 
-Widget fieldNumero() {
-  return Container(
-    alignment: Alignment.center,
-    padding: const EdgeInsets.all(10),
-    child: TextFormField(
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(), labelText: 'Numero'),
-    ),
-  );
-}
+  Widget fieldValidade() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: TextField(
+        controller: _validadeController,
+        keyboardType: TextInputType.datetime,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Validade',
+        ),
+      ),
+    );
+  }
 
-Widget fieldValidade() {
-  return Container(
-    alignment: Alignment.center,
-    padding: const EdgeInsets.all(10),
-    child: TextFormField(
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(), labelText: 'Validade'),
-    ),
-  );
-}
+  Widget fieldCvv() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: TextField(
+        controller: _cvvController,
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'CVV',
+        ),
+      ),
+    );
+  }
 
-Widget fieldCvv() {
-  return Container(
-    alignment: Alignment.center,
-    padding: const EdgeInsets.all(10),
-    child: TextFormField(
-      decoration:
-          const InputDecoration(border: OutlineInputBorder(), labelText: 'CVV'),
-    ),
-  );
-}
+  Widget fieldDescricao() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: TextField(
+        controller: _descricaoController,
+        keyboardType: TextInputType.text,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Descrição',
+        ),
+      ),
+    );
+  }
 
-// ignore: non_constant_identifier_names
-Widget ContainerPreto() {
-  return (Container(
-    padding: const EdgeInsets.symmetric(vertical: 16.0),
-    child: Container(
-      height: 40,
-      color: Colors.black,
-    ),
-  ));
-}
+  Widget fieldSenha() {
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      child: TextField(
+        controller: _senhaController,
+        obscureText: _ocultaSenha,
+        decoration: InputDecoration(
+          border: UnderlineInputBorder(),
+          hintText: "Informe a sua senha",
+          labelText: "Senha",
+          helperText: "Digite uma senha para sua segurança",
+          helperStyle: TextStyle(color: Colors.green),
+          suffixIcon: IconButton(
+            icon: Icon(_ocultaSenha ? Icons.visibility : Icons.visibility_off),
+            onPressed: () {
+              setState(
+                () {
+                  _ocultaSenha = !_ocultaSenha;
+                },
+              );
+            },
+          ),
+          alignLabelWithHint: false,
+          filled: true,
+        ),
+        keyboardType: TextInputType.visiblePassword,
+        textInputAction: TextInputAction.done,
+      ),
+    );
+  }
 
-// ignore: non_constant_identifier_names
-Widget ContainerCinza() {
-  // ignore: avoid_unnecessary_containers
-  return (Container(
-    child: Container(
-      height: 50,
-      color: Colors.black,
-    ),
-  ));
-}
+  Widget textNome() {
+    return Expanded(
+        child: Align(
+            alignment: Alignment.bottomRight,
+            child: Text(
+              'Seu Nome',
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            )));
+  }
 
-Widget textNome() {
-  // ignore: prefer_const_constructors
-  return Text(
-    "John Do",
-    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-    textAlign: TextAlign.right,
-  );
-}
-
-// ignore: non_constant_identifier_names
-Widget CartaoFrente(context) {
-  return SizedBox(
+  Widget CartaoFrente(context) {
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [cartaoFront(context)],
-      ));
-}
+      ),
+    );
+  }
 
-Widget cartaoFront(context) {
-  return Container(
-    width: MediaQuery.of(context).size.width * .9,
-    height: 200,
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: const Color.fromARGB(255, 16, 121, 22)),
-    child: Column(
-      children: [fieldNumero(), fieldValidade(), textNome()],
-    ),
-  );
-}
+  Widget cartaoFront(context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * .9,
+      height: 250,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Color.fromARGB(255, 39, 39, 39)),
+      child: Column(
+        children: [fieldNumero(), fieldValidade(), fieldSenha(), textNome()],
+      ),
+    );
+  }
 
-// ignore: non_constant_identifier_names
-Widget CartaoVerso(context) {
-  return SizedBox(
+  Widget CartaoAtras(context) {
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [cartaoVerse(context)],
-      ));
-}
+        children: [cartaoBack(context)],
+      ),
+    );
+  }
 
-Widget cartaoVerse(context) {
-  return Container(
-    width: MediaQuery.of(context).size.width * .9,
-    height: 200,
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: const Color.fromARGB(255, 255, 193, 7)),
-    child: Column(
-      children: [ContainerPreto(), ContainerCinza(), fieldCvv()],
-    ),
-  );
-}
-
-// ignore: must_be_immutable
-class Body extends StatelessWidget {
-  bool mostraSenha = false;
-
-  Body({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        fieldDescricao(),
-        const SizedBox(
-          height: 10,
-        ),
-        CartaoFrente(context),
-        const SizedBox(
-          height: 20,
-        ),
-        CartaoVerso(context),
-        const SizedBox(
-          height: 10,
-        ),
-        fieldSenha(),
-      ],
+  Widget cartaoBack(context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * .9,
+      height: 250,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Color.fromARGB(255, 27, 27, 27)),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          Container(height: 40, color: Colors.black),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: 40,
+            color: Colors.grey,
+          ),
+          fieldCvv(),
+        ],
+      ),
     );
   }
 }

@@ -87,7 +87,9 @@ class _Login extends StatelessWidget {
                 child: const Text('Login'),
                 onPressed: () async {
                   // ignore: await_only_futures
+
                   if (await PerfilDatasource.getPerfil(email, pass)) {
+                    // ignore: use_build_context_synchronously
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return Home();

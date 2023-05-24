@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, duplicate_ignore
 
 import 'package:flutter/material.dart';
-import 'package:password_manager/passwordmaker.dart';
+import 'passwordmaker.dart';
 
 import 'cad_senhas.dart';
 import 'cartaoCredito.dart';
@@ -34,7 +34,7 @@ class Home extends StatelessWidget {
                     onTap: () => {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return cartaoCredito();
+                        return cadcartao();
                       }))
                     },
                   ),

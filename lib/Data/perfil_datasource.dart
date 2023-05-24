@@ -1,6 +1,6 @@
-import 'package:password_manager/Data/Entity/ProfileEntity.dart';
-import 'package:password_manager/Data/db_conection.dart';
-import 'package:path/path.dart';
+import 'Entity/ProfileEntity.dart';
+import 'db_conection.dart';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 
